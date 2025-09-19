@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Category , City , ads
 from django.http.response import JsonResponse , HttpResponse
+from rest_framework.generics import ListAPIView,DestroyAPIView ,CreateAPIView,UpdateAPIView
+from .serializers import Ads_Serializers
 # Create your views here.
 
 def show_all_ads(request):
@@ -24,3 +26,19 @@ def delete_ads_by_id(request,id):
         return HttpResponse('the ads deleted')
     except ads.DoesNotExist:
         return HttpResponse('the ads not exists')
+    
+class All_ads_list(ListAPIView):
+    queryset = ads.objects.all()
+    serializer_class = Ads_Serializers
+
+class Create_ads(CreateAPIView):
+    queryset = ads.objects.all()
+    serializer_class = Ads_Serializers
+
+class Delete_ads(DestroyAPIView):
+    queryset = ads.objects.all()
+    serializer_class = Ads_Serializers
+
+class Update_ads(UpdateAPIView):
+    queryset = ads.objects.all()
+    serializer_class = Ads_Serializers
